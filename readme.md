@@ -1,4 +1,6 @@
-# Advanced Lane Finding
+# Advanced Lane Detection
+
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 ![](images/image13.png)
 
@@ -15,20 +17,16 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature.
 
-Project submission includes following files:
+Project files:
 
-* Writeup _README.md_ file (you're reading it right now).
-* IPython notebook _advanced\_lane\_detection.ipynb_, which contains all project code and additional commentary of the project implementation.
-* Example output images for each stage of the processing pipeline in the _output\_images_ folder.
-* Output video files in the _output\_videos_ folder.
-
-This writeup includes statements and supporting figures / images that explain how each rubric item was addressed, and specifically where in the code each step was handled. Also, please take a look at jupyter notebook, which contains additional commentary for pipeline implementation.
-
-All rubric points addressed in order and described accordingly to [Project Specifications](https://review.udacity.com/#!/rubrics/571/view)
+* IPython notebook [_advanced\_lane\_detection.ipynb_](advanced_lane_detection.ipynb), which contains all project code and additional commentary of the project implementation.
+* Example output images for each stage of the processing pipeline in the [_output\_images_](output_images/) folder.
+* Output video files in the [_output\_videos_](output_videos/) folder.
 
 ## Camera Calibration
 #### Camera matrix and distortion coefficients
-The code for this step is contained in the code cells 1, 2 of the project IPython notebook.
+Camera lens can cause distortion to images and as result it can change the apparent size of an object in an image, object's shape and appearance may change depending on where it is in the field of view. Also, distortion can make objects appear closer or farther away than they actually are. That is why it is so important to compute camera calibration coefficients and to undistort images.
+Code for this step is contained in the code cells 1, 2 of the project IPython notebook.
 For each camera calibration image I am computing chessboard corners position using `cv2.findChessboardCorners`'function applied to the grayscaled original image. All found object and corner points stored in separate arrays which are then used as arguments for the `cv2.calibrateCamera`'function which produces calibration and distortion coefficients of the camera. Using these coefficients I am undistorting test calibration images using `cv2.undistort`'function, examples of output images are presented in the _output\_images/out\_calibration[N].jpg_ files.
 Here is an example of output:
 
@@ -109,6 +107,6 @@ Output files are in the _output\_videos_ folder.
 
 Most time consuming issues are include fine-tuning perspective transform points coordinates. Also it is worth mentioning that thresholding range values also have to be picked up manually, and it is not an ordinary task, because even small difference make a big change for the resulting lane lines image.
 
-Most likely my pipeline will fail on the videos with not clearly visible lane lines . As you can see, challenge videos was handled not properly with my pipeline.
+Most likely my pipeline will fail on the videos with not clearly visible lane lines .
 
-To make my pipeline more robust I need to implement more sophisticated lane lines search algorithm. Including advanced window search algorithm and implement outlier rejection and use a low-pass filter to smooth the lane detection over frames.
+To make my pipeline more robust it is probably reasonable to implement more sophisticated lane lines search algorithm including advanced window search algorithm and implement outlier rejection and use a low-pass filter to smooth the lane detection over frames.
